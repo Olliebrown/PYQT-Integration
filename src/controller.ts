@@ -2,8 +2,8 @@
 
 import * as vscode from 'vscode';
 
-export class PYQTController{
-    private context:vscode.ExtensionContext;
+export class PySide2Controller {
+    public context:vscode.ExtensionContext;
     private cp = require('child_process');
     private fs = require('fs');
     private path = require('path');
@@ -11,7 +11,7 @@ export class PYQTController{
 
     constructor(context:vscode.ExtensionContext){
         this.context = context;
-        this._outputChannel = vscode.window.createOutputChannel("PYQT");
+        this._outputChannel = vscode.window.createOutputChannel("PySide2");
     }
 
     private initFolder(filePath:string, {isRelativeToScript = false} = {}) {
@@ -32,8 +32,6 @@ export class PYQTController{
                     vscode.window.showErrorMessage(err.toString());
                     throw err;
                 }
-        
-                //console.log(`Directory ${curDir} already exists!`);
             }
         
             return curDir;
@@ -41,7 +39,6 @@ export class PYQTController{
     }
 
     private exec(cmd: string, {successMessage="", stdoutPath="", cwd=""} = {}){
-        //this._outputChannel.show(true);
         this._outputChannel.appendLine(`[Running] ${cmd}`);
         this.cp.exec(cmd,  {cwd: cwd}, (err:any, stdout:any, stderr:any) => {
             if(stdout && stdoutPath){
@@ -68,14 +65,14 @@ export class PYQTController{
     }
 
     private async getOrConfigDesignerPath() {
-        let dPath = vscode.workspace.getConfiguration().get('pyqt-integration.qtdesigner.path', "");
+        let dPath = vscode.workspace.getConfiguration().get('pyside2-vsc.designer-creator.path', "");
         if(dPath === ""){
             vscode.window.showInformationMessage("Select your executable file of QT Designer");
             await vscode.window.showOpenDialog({
                 canSelectMany: false
             }).then((uris: vscode.Uri[] | undefined) => {
                 if(uris && uris.length !== 0){
-                    vscode.workspace.getConfiguration().update('pyqt-integration.qtdesigner.path', uris[0].fsPath, vscode.ConfigurationTarget.Global);
+                    vscode.workspace.getConfiguration().update('pyside2-vsc.designer-creator.path', uris[0].fsPath, vscode.ConfigurationTarget.Global);
                     dPath = uris[0].fsPath;
                 }
             });
@@ -132,7 +129,7 @@ export class PYQTController{
      * preview
      */
     public async preview(fileUri: vscode.Uri) {
-        const pyuic = vscode.workspace.getConfiguration().get('pyqt-integration.pyuic.cmd', "");
+        const pyuic = vscode.workspace.getConfiguration().get('pyside2-vsc.uic.cmd', "");
         this.fs.lstat(fileUri.fsPath, (err:any, stats:any) => {
             if(err){
                 return vscode.window.showErrorMessage(err);
@@ -180,9 +177,9 @@ export class PYQTController{
      * compileForm
      */
     public async compileForm(fileUri: vscode.Uri) {
-        const pyuic = vscode.workspace.getConfiguration().get('pyqt-integration.pyuic.cmd', "");
-        const pyPath = vscode.workspace.getConfiguration().get('pyqt-integration.pyuic.compile.filepath', "");
-        const addOpts = vscode.workspace.getConfiguration().get('pyqt-integration.pyuic.compile.addOptions', "");
+        const pyuic = vscode.workspace.getConfiguration().get('pyside2-vsc.uic.cmd', "");
+        const pyPath = vscode.workspace.getConfiguration().get('pyside2-vsc.uic.compile.filepath', "");
+        const addOpts = vscode.workspace.getConfiguration().get('pyside2-vsc.uic.compile.addOptions', "");
 
         // path resolved
         let pyPathR = this.resolvePath(fileUri, pyPath);
@@ -207,9 +204,9 @@ export class PYQTController{
      * compileQRC
      */
     public async compileQRC(fileUri: vscode.Uri) {
-        const pyrcc = vscode.workspace.getConfiguration().get('pyqt-integration.pyrcc.cmd', "");
-        const pyPath = vscode.workspace.getConfiguration().get('pyqt-integration.pyrcc.compile.filepath', "");
-        const addOpts = vscode.workspace.getConfiguration().get('pyqt-integration.pyrcc.compile.addOptions', "");
+        const pyrcc = vscode.workspace.getConfiguration().get('pyside2-vsc.rcc.cmd', "");
+        const pyPath = vscode.workspace.getConfiguration().get('pyside2-vsc.rcc.compile.filepath', "");
+        const addOpts = vscode.workspace.getConfiguration().get('pyside2-vsc.rcc.compile.addOptions', "");
 
         // path resolved
         let pyPathR = this.resolvePath(fileUri, pyPath);

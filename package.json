@@ -1,21 +1,23 @@
 {
-    "name": "pyqt-integration",
-    "displayName": "PYQT Integration",
-    "description": "PYQT integration",
+    "name": "pyside2-vsc",
+    "displayName": "PySide2-VSC",
+    "description": "Qt for Python (PySide2) VS Code Integration",
     "license": "MIT",
-    "version": "0.1.5",
-    "publisher": "zhoufeng",
+    "version": "0.1.0",
+    "publisher": "Olliebrown",
     "engines": {
         "vscode": "^1.22.0"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/mine2chow/PYQT-Integration.git"
+        "url": "https://github.com/Olliebrown/PySide2-VSC"
     },
-    "icon": "imgs/pyqt-integration-icon.png",
-    "homepage": "https://github.com/mine2chow/PYQT-Integration/blob/master/README.md",
+    "icon": "imgs/icon.png",
+    "homepage": "https://github.com/Olliebrown/PySide2-VSC/blob/master/README.md",
     "keywords": [
-        "pyqt",
+        "pyside",
+        "pyside2",
+        "python",
         "qt"
     ],
     "categories": [
@@ -28,116 +30,116 @@
     "contributes": {
         "commands": [
             {
-                "command": "pyqt-integration.createNewForm",
-                "title": "PYQT: New Form"
+                "command": "pyside2-vsc.createNewForm",
+                "title": "PySide2: New Form in Designer/Creator"
             },
             {
-                "command": "pyqt-integration.editInDesigner",
-                "title": "PYQT: Edit In Designer"
+                "command": "pyside2-vsc.editInDesigner",
+                "title": "PySide2: Edit Form in Designer/Creator"
             },
             {
-                "command": "pyqt-integration.Preview",
-                "title": "PYQT: Preview"
+                "command": "pyside2-vsc.Preview",
+                "title": "PySide2: Quick Preview of Compiled Form"
             },
             {
-                "command": "pyqt-integration.compileForm",
-                "title": "PYQT: Compile Form"
+                "command": "pyside2-vsc.compileForm",
+                "title": "PySide2: Compile Form to Python"
             },
             {
-                "command": "pyqt-integration.compileQRC",
-                "title": "PYQT: Compile Resource"
+                "command": "pyside2-vsc.compileQRC",
+                "title": "PySide2: Compile Resource to Python"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
-                    "command": "pyqt-integration.createNewForm",
+                    "command": "pyside2-vsc.createNewForm",
                     "when": "filesExplorerFocus == true",
-                    "group": "pyqt-integration@1"
+                    "group": "pyside2-vsc@1"
                 },
                 {
-                    "command": "pyqt-integration.Preview",
+                    "command": "pyside2-vsc.Preview",
                     "when": "resourceScheme == file && resourceExtname == .ui",
-                    "group": "pyqt-integration@2"
+                    "group": "pyside2-vsc@2"
                 },
                 {
-                    "command": "pyqt-integration.editInDesigner",
+                    "command": "pyside2-vsc.editInDesigner",
                     "when": "resourceScheme == file && resourceExtname == .ui",
-                    "group": "pyqt-integration@3"
+                    "group": "pyside2-vsc@3"
                 },
                 {
-                    "command": "pyqt-integration.compileForm",
+                    "command": "pyside2-vsc.compileForm",
                     "when": "resourceScheme == file && resourceExtname == .ui",
-                    "group": "pyqt-integration@4"
+                    "group": "pyside2-vsc@4"
                 },
                 {
-                    "command": "pyqt-integration.compileQRC",
+                    "command": "pyside2-vsc.compileQRC",
                     "when": "resourceScheme == file && resourceExtname == .qrc",
-                    "group": "pyqt-integration@4"
+                    "group": "pyside2-vsc@4"
                 }
             ],
             "commandPalette": [
                 {
-                    "command": "pyqt-integration.editInDesigner",
+                    "command": "pyside2-vsc.editInDesigner",
                     "when": "false"
                 },
                 {
-                    "command": "pyqt-integration.Preview",
+                    "command": "pyside2-vsc.Preview",
                     "when": "false"
                 },
                 {
-                    "command": "pyqt-integration.compileForm",
+                    "command": "pyside2-vsc.compileForm",
                     "when": "false"
                 },
                 {
-                    "command": "pyqt-integration.compileQRC",
+                    "command": "pyside2-vsc.compileQRC",
                     "when": "false"
                 }
             ]
         },
         "configuration": {
-            "title": "PYQT integration configuration",
+            "title": "PySide2 VSC configuration",
             "properties": {
-                "pyqt-integration.qtdesigner.path": {
+                "pyside2-vsc.designer-creator.path": {
                     "type": "string",
                     "default": "",
-                    "description": "Path of QT designer",
+                    "description": "Path to QtCreator or QtDesigner",
                     "scope": "window"
                 },
-                "pyqt-integration.pyuic.cmd": {
+                "pyside2-vsc.uic.cmd": {
                     "type": "string",
-                    "default": "pyuic5",
-                    "description": "'pyuic' command file, you can also specify a path",
+                    "default": "pyside2-uic",
+                    "description": "Command to compile a .ui file into python",
                     "scope": "window"
                 },
-                "pyqt-integration.pyrcc.cmd": {
+                "pyside2-vsc.rcc.cmd": {
                     "type": "string",
-                    "default": "pyrcc5",
+                    "default": "pyside2-rcc",
                     "description": "'pyrcc' command file, you can also specify a path",
                     "scope": "window"
                 },
-                "pyqt-integration.pyuic.compile.filepath": {
+                "pyside2-vsc.uic.compile.filepath": {
                     "type": "string",
                     "default": "Ui_${ui_name}.py",
-                    "description": "Target '.py' file path for compiling, relative path as default, switch to absolute path by involving ${workspace}, e.g. ${workspace}\\\\UI\\\\Ui_${ui_name}.py",
+                    "description": "Pattern defining where compiled forms should be placed (use ${workspace} and ${ui_name})",
                     "scope": "window"
                 },
-                "pyqt-integration.pyuic.compile.addOptions": {
+                "pyside2-vsc.uic.compile.addOptions": {
                     "type": "string",
                     "default": "",
-                    "description": "Additional options for pyuic compiling, it can be a combination of '-x', '-d', '-i', etc.",
+                    "description": "Additional command line options for pyside2-uic",
                     "scope": "window"
                 },
-                "pyqt-integration.pyrcc.compile.filepath": {
+                "pyside2-vsc.rcc.compile.filepath": {
                     "type": "string",
                     "default": "${qrc_name}_rc.py",
-                    "description": "Target '.py' file path for compiling, relative path as default, switch to absolute path by involving ${workspace}, e.g. ${workspace}\\\\QRC\\\\${qrc_name}_rc.py",
+                    "description": "Pattern defining where compiled resources should be placed (use ${workspace} and ${ui_name})",
                     "scope": "window"
                 },
-                "pyqt-integration.pyrcc.compile.addOptions": {
+                "pyside2-vsc.rcc.compile.addOptions": {
                     "type": "string",
                     "default": "",
-                    "description": "Additional options for pyrcc compiling, it can be a combination of '-root', '-threshold', '-compress', '-no-compress', etc.",
+                    "description": "Additional command line options for pyside2-rcc",
                     "scope": "window"
                 }
             }
